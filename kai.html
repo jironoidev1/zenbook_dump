@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard การเลี้ยงไข่ผำ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        .card h3 {
+            margin: 0;
+            color: #555;
+        }
+        .card p {
+            font-size: 2em;
+            margin: 10px 0 0;
+            color: #333;
+        }
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Dashboard การเลี้ยงไข่ผำ</h1>
+        <p>ข้อมูลเซนเซอร์ล่าสุด</p>
+    </div>
+
+    <div class="card-container">
+        <div class="card">
+            <h3>อุณหภูมิ</h3>
+            <p id="tempValue">-- °C</p>
+        </div>
+        <div class="card">
+            <h3>ค่า pH</h3>
+            <p id="phValue">--</p>
+        </div>
+        <div class="card">
+            <h3>ค่า EC</h3>
+            <p id="ecValue">-- µS/cm</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>กราฟอุณหภูมิย้อนหลัง</h2>
+        <canvas id="tempChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h2>กราฟค่า pH และ EC</h2>
+        <canvas id="phEcChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // ข้อมูลเซนเซอร์จำลอง
+    const sensorData = {
+        temp: 25.5,
+        ph: 7.2,
+        ec: 850
+    };
+
+    // อัปเดตค่าบนการ์ด
+    document.getElementById('tempValue').innerText = sensorData.temp.toFixed(1) + ' °C';
+    document.getElementById('phValue').innerText = sensorData.ph.toFixed(1);
+    document.getElementById('ecValue').innerText = sensorData.ec + ' µS/cm';
+
+    // เตรียมข้อมูลสำหรับกราฟ
+    const tempLabels = ['13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    const tempData = [25.1, 25.4, 25.8, 26.0, 25.7, 25.5];
+    const phData = [7.1, 7.2, 7.2, 7.3, 7.1, 7.2];
+    const ecData = [840, 845, 850, 855, 850, 850];
+
+    // สร้างกราฟอุณหภูมิ
+    const tempCtx = document.getElementById('tempChart').getContext('2d');
+    const tempChart = new Chart(tempCtx, {
+        type: 'line',
+        data: {
+            labels: tempLabels,
+            datasets: [{
+                label: 'อุณหภูมิ (°C)',
+                data: tempData,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+
+    // สร้างกราฟ pH และ EC
+    const phEcCtx = document.getElementById('phEcChart').getContext('2d');
+    const phEcChart = new Chart(phEcCtx, {
+        type: 'line',
+        data: {
+            labels: tempLabels,
+            datasets: [
+                {
+                    label: 'ค่า pH',
+                    data: phData,
+                    borderColor: 'rgb(255, 99, 132)',
+                    yAxisID: 'y1',
+                    tension: 0.1
+                },
+                {
+                    label: 'ค่า EC (µS/cm)',
+                    data: ecData,
+                    borderColor: 'rgb(54, 162, 235)',
+                    yAxisID: 'y2',
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'ค่า pH'
+                    }
+                },
+                y2: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false,
+                    },
+                    title: {
+                        display: true,
+                        text: 'ค่า EC (µS/cm)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
