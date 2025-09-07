@@ -49,10 +49,10 @@ const char* topic_lux = "kaipum/lux";
 int state1 = LOW;
 int state2 = LOW;
 int state3 = LOW;
-int state4 = LOW;
-int state5 = LOW;
-int state6 = LOW;
-int state7 = LOW;
+int state4 = HIGH;
+int state5 = HIGH;
+int state6 = HIGH;
+int state7 = HIGH;
 
 int r1 = 25;
 int r2 = 26;
@@ -96,10 +96,10 @@ void setup() {
   digitalWrite(r1, LOW);
   digitalWrite(r2, LOW);
   digitalWrite(r3, LOW);
-  digitalWrite(r4, LOW);
-  digitalWrite(r5, LOW);
-  digitalWrite(r6, LOW);
-  digitalWrite(r7, LOW);
+  digitalWrite(r4, HIGH);
+  digitalWrite(r5, HIGH);
+  digitalWrite(r6, HIGH);
+  digitalWrite(r7, HIGH);
 
   pinMode(TdsSensorPin, INPUT);
   pinMode(WLpin, INPUT);

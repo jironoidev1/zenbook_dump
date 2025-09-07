@@ -35,10 +35,10 @@ void callback(char *topic, byte *payload, unsigned int length) {
     if (message == "1on" ){state1 = HIGH;}else if(message == "1off"){state1 = LOW;}
     if (message == "2on" ){state2 = HIGH;}else if(message == "2off"){state2 = LOW;}
     if (message == "3on" ){state3 = HIGH;}else if(message == "3off"){state3 = LOW;}
-    if (message == "4on" ){state4 = HIGH;}else if(message == "4off"){state4 = LOW;}
-    if (message == "5on" ){state5 = HIGH;}else if(message == "5off"){state5 = LOW;}
-    if (message == "6on" ){state6 = HIGH;}else if(message == "6off"){state6 = LOW;}
-    if (message == "7on" ){state7 = HIGH;}else if(message == "7off"){state7 = LOW;}
+    if (message == "4on" ){state4 = LOW;}else if(message == "4off"){state4 = HIGH;}
+    if (message == "5on" ){state5 = LOW;}else if(message == "5off"){state5 = HIGH;}
+    if (message == "6on" ){state6 = LOW;}else if(message == "6off"){state6 = HIGH;}
+    if (message == "7on" ){state7 = LOW;}else if(message == "7off"){state7 = HIGH;}
 
     digitalWrite(r1,state1);
     digitalWrite(r2,state2);
